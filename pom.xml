@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.communication</groupId>
 	<artifactId>communication</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<name>communication_app</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>

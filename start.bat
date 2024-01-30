@@ -1,1 +1,1 @@
-mvn spring-boot:start 
+./mvnw clean install
