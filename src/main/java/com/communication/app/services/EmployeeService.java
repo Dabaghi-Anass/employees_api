@@ -1,6 +1,8 @@
 package com.communication.app.services;
 
+import com.communication.app.entities.CityEntity;
 import com.communication.app.entities.Employee;
+import com.communication.app.entities.EmployeePage;
 import com.communication.app.errors.EmployeeNotFoundException;
 import com.communication.app.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+
 @Service
 @CrossOrigin("*")
 public class EmployeeService {
@@ -27,7 +28,7 @@ public class EmployeeService {
         return employee.get();
     }
     public List<Employee> getEmployeesByName(String name){
-        return employeeRepository.findAllByName(name);
+        return employeeRepository.findAllByNameContainingIgnoreCase(name);
     }
     public Employee addEmployee(Employee employee){
         return employeeRepository.save(employee);
@@ -50,9 +51,14 @@ public class EmployeeService {
         if(!isEmptyField(employee.getSalary())) employee1.setSalary(employee.getSalary());
         return employeeRepository.save(employee1);
     }
-    public List<Employee> getEmployeesByPage(int limit, int offset) {
+    public EmployeePage getEmployeesByPage(int limit, int offset) {
         Pageable pageable = PageRequest.of(offset,limit);
-        return employeeRepository.findAll(pageable).toList();
+        List<Employee> employees = employeeRepository.findAll(pageable).toList();
+        EmployeePage employeePage = EmployeePage.builder()
+                .employees(employees)
+                .hasNext(employees.size() == limit)
+                .build();
+        return employeePage;
     }
     public void addAllEmployees(List<Employee> employees) {
         employeeRepository.saveAll(employees);
@@ -61,6 +67,16 @@ public class EmployeeService {
         Optional<Employee> employeeOptional = employeeRepository.findById(id);
         if(employeeOptional.isEmpty()) return;
         employeeRepository.delete(employeeOptional.get());
+    }
+    public  List<CityEntity> getAllCities()  {
+        List<String> citiesString =  employeeRepository.findAllCities();
+        long i = 0;
+        List<CityEntity> citiesList = new ArrayList<>();
+        for(String city: citiesString){
+            citiesList.add(CityEntity.builder().name(city).id(i).build());
+            i++;
+        }
+        return citiesList.stream().sorted(Comparator.comparingInt(a -> a.getName().charAt(0))).toList();
     }
 
 }

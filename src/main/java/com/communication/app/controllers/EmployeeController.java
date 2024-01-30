@@ -1,6 +1,8 @@
 package com.communication.app.controllers;
 
+import com.communication.app.entities.CityEntity;
 import com.communication.app.entities.Employee;
+import com.communication.app.entities.EmployeePage;
 import com.communication.app.errors.EmployeeNotFoundException;
 import com.communication.app.services.EmployeeService;
 
@@ -20,7 +22,7 @@ public class EmployeeController {
         return employeeService.getEmployeesByName(name);
     }
     @GetMapping(params = {"limit","offset"})
-    public List<Employee> getEmployeesByPageRoute(
+    public EmployeePage getEmployeesByPageRoute(
             @RequestParam("limit") int limit,
             @RequestParam("offset") int offset){
         return employeeService.getEmployeesByPage(limit,offset);
@@ -29,6 +31,11 @@ public class EmployeeController {
     @GetMapping
     public List<Employee> getAllEmployeesRoute(){
         return employeeService.getAllEmployees();
+    }
+    @SneakyThrows
+    @GetMapping("/{id}")
+    public Employee getEmployeeByIdRoute(@PathVariable Long id){
+        return employeeService.getEmployeeById(id);
     }
     @PostMapping("/addAll")
     public String pst(@RequestBody List<Employee> employees){
@@ -48,5 +55,9 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     public void deleteEmployeeRoute(@PathVariable Long id){
         employeeService.deleteEmployee(id);
+    }
+    @GetMapping("/cities")
+    public List<CityEntity> getAllCitiesRoute(){
+        return employeeService.getAllCities();
     }
 }

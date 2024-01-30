@@ -1,5 +1,6 @@
 package com.communication.app.repositories;
 
+import com.communication.app.entities.CityEntity;
 import com.communication.app.entities.Employee;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,7 @@ import java.util.List;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-    public List<Employee> findAllByName(String name);
+    public List<Employee> findAllByNameContainingIgnoreCase(String name);
+    @Query("SELECT DISTINCT e.city FROM Employee e")
+    public List<String> findAllCities();
 }
