@@ -1,15 +1,15 @@
 server:
   port: 3000
-  address: 192.168.1.111
+#  address: 192.168.1.111
 spring:
   application:
     name: employees-api
   profiles:
     active: prod
   datasource:
-    url: jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11680623
-    username: sql11680623
-    password: X3bcfuBjyH
+    url: jdbc:mysql://uy6edb4uzcm2sewu:jNAKxdIAebXImsDkGOsh@bri4sd54ueqhatf064m1-mysql.services.clever-cloud.com:3306/bri4sd54ueqhatf064m1
+    username: uy6edb4uzcm2sewu
+    password: jNAKxdIAebXImsDkGOsh
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
