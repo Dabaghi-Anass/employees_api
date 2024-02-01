@@ -1,6 +1,6 @@
 server:
   port: 3000
-  address: 192.168.1.111
+#  address: 192.168.1.111
 spring:
   application:
     name: employees-api
