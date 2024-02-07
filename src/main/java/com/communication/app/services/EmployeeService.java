@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.*;
 
 @Service
-@CrossOrigin("*")
 public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
