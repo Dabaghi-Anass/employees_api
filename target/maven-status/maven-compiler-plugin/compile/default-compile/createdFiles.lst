@@ -1,9 +1,11 @@
 com\communication\app\repositories\EmployeeRepository.class
 com\communication\app\entities\CityEntity$CityEntityBuilder.class
+com\communication\app\services\StorageService.class
 com\communication\app\EmployeesApplication.class
 com\communication\app\errors\EmployeeNotFoundException.class
 com\communication\app\errors\RestExceptionHandler.class
 com\communication\app\controllers\ConfigController.class
+com\communication\app\controllers\MediaController.class
 com\communication\app\entities\CityEntity.class
 com\communication\app\entities\ExceptionEntity.class
 com\communication\app\config\Config.class
