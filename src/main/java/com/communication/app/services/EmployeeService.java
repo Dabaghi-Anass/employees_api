@@ -27,6 +27,10 @@ public class EmployeeService {
         if(employee.isEmpty()) throw new EmployeeNotFoundException("Employee not found");
         return employee.get();
     }
+    public List<Employee> getEmployeesByCity(String city) {
+        List<Employee> employees = employeeRepository.findAllByCity(city);
+        return employees;
+    }
     public List<Employee> getEmployeesByName(String name){
         return employeeRepository.findAllByNameContainingIgnoreCase(name);
     }
@@ -49,6 +53,7 @@ public class EmployeeService {
         if(!isEmptyField(employee.getImageUrl())) employee1.setImageUrl(employee.getImageUrl());
         if(!isEmptyField(employee.getPhone())) employee1.setPhone(employee.getPhone());
         if(!isEmptyField(employee.getSalary())) employee1.setSalary(employee.getSalary());
+        if(!isEmptyField(employee.getBio())) employee1.setBio(employee.getBio());
         return employeeRepository.save(employee1);
     }
     public EmployeePage getEmployeesByPage(int limit, int offset) {

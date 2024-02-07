@@ -22,4 +22,4 @@ COPY --from=build /app/target/communication-1.jar .
 EXPOSE 8080
 
 # Run the application
-CMD ["java", "-jar", "communication-1.jar"]
+CMD ["java", "-jar","-Dspring.profiles.active=prod", "communication-1.jar"]

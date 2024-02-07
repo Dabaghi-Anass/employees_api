@@ -21,6 +21,10 @@ public class EmployeeController {
     public List<Employee> getEmployeesByNameRoute(@RequestParam String name){
         return employeeService.getEmployeesByName(name);
     }
+    @GetMapping(params = "city")
+    public List<Employee> getEmployeesByCityRoute(@RequestParam String city){
+        return employeeService.getEmployeesByCity(city);
+    }
     @GetMapping(params = {"limit","offset"})
     public EmployeePage getEmployeesByPageRoute(
             @RequestParam("limit") int limit,

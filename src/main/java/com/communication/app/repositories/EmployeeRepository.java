@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     public List<Employee> findAllByNameContainingIgnoreCase(String name);
+    public List<Employee> findAllByCity(String city);
     @Query("SELECT DISTINCT e.city FROM Employee e")
     public List<String> findAllCities();
 }

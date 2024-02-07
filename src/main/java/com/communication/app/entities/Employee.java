@@ -23,4 +23,5 @@ public class Employee {
     private Short age;
     private String city;
     private String imageUrl;
+    private String bio;
 }

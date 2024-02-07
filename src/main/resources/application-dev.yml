@@ -1,0 +1,17 @@
+server:
+  port: ${PORT}
+  address: ${SERVER_ADDRESS:localhost}
+spring:
+  application:
+    name: employees-api
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
