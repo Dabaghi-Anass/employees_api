@@ -1,6 +1,3 @@
-server:
-  port: ${PORT}
-  address: ${SERVER_ADDRESS}
 spring:
   application:
     name: employees-api
