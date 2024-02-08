@@ -8,9 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,8 +38,15 @@ public class StorageService {
                 .toOutputStream(outputStream);
         return outputStream.toByteArray();
     }
-    public  String getServerLink(String fileName) {
-       return  String.format("%s://%s:%s/%s",request.getScheme(), SERVER_DOMAIN, SERVER_PORT, fileName);
+    public List<String> getFilesLinks(File[] files) {
+        List<String> links = new ArrayList<>();
+        for(File file: files) {
+            links.add(getServerLink(file.getName()));
+        }
+        return links;
+    }
+    public String getServerLink(String fileName) {
+        return  String.format("%s://%s:%s/%s",request.getScheme(), request.getServerName(), request.getServerPort(), fileName);
     }
     @SneakyThrows
     public String uploadFile(MultipartFile file) {
@@ -51,4 +62,11 @@ public class StorageService {
         String fileLink = getServerLink(fileName);
         return fileLink;
     }
+    public List<String> getAllMedias() {
+        String uploadDirPath = UPLOAD_DIR.replace("file:/", "");
+        File uploadDir = new File(uploadDirPath);
+        File[] files = uploadDir.listFiles();
+        return getFilesLinks(files);
+    }
+
 }

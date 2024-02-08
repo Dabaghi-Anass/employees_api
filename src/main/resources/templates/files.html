@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Images from api (Developer only)</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            background: black;
+        }
+        img {
+            width: 25%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <main id="images-container"></main>
+    <script>
+        async function getData(){
+            const response = await fetch('/media/files')
+            if(response.ok){
+                const imagesLinks = await response.json()
+                console.log(imagesLinks)
+                populateUi(imagesLinks)
+            }
+            else{
+                alert('Error fetching images')
+            }
+        }
+        function populateUi(imagesLinks){
+            const imagesContainer = document.getElementById('images-container')
+            imagesLinks.forEach(link => {
+                const img = document.createElement('img')
+                img.src = link
+                imagesContainer.appendChild(img)
+            })
+        }
+
+        addEventListener('DOMContentLoaded', getData)
+    </script>
+</body>
+</html>
