@@ -16,6 +16,4 @@ WORKDIR /app
 
 COPY --from=build /app/target/communication-1.jar .
 
-EXPOSE 8080
-
 CMD ["java", "-jar", "communication-1.jar"]
