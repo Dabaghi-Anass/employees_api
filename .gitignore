@@ -1,6 +1,6 @@
 HELP.md
 target/
-.env
+.env-p
 .fastRequest/
 .mvn
 !.mvn/wrapper/maven-wrapper.jar
@@ -8,7 +8,7 @@ target/
 !**/src/test/**/target/
 
 ### STS ###
-.env
+.env-p
 .apt_generated
 .classpath
 .factorypath

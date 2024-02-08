@@ -19,10 +19,6 @@ import java.util.UUID;
 
 @Service
 public class StorageService {
-    @Value("${server.address}")
-    private String SERVER_DOMAIN;
-    @Value("${server.port}")
-    private String SERVER_PORT;
     @Autowired
     private  HttpServletRequest request;
     private static String userHome = System.getProperty("user.home");
