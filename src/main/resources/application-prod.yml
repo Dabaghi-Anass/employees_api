@@ -12,3 +12,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  web:
+    resources:
+      static-locations: file:/${user.home}${file.separator}uploads

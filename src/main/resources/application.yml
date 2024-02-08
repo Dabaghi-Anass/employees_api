@@ -1,3 +1,6 @@
 spring:
   profiles:
     active: prod
+  web:
+    resources:
+      static-locations: file:/${user.home}${file.separator}uploads
