@@ -1,3 +1,6 @@
+server:
+  port: ${PORT:3000}
+  address: ${SERVER_ADDRESS:localhost}
 spring:
   application:
     name: employees-api
