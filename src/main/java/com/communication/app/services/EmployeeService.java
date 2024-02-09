@@ -1,18 +1,21 @@
 package com.communication.app.services;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import com.communication.app.entities.CityEntity;
 import com.communication.app.entities.Employee;
 import com.communication.app.entities.EmployeePage;
 import com.communication.app.errors.EmployeeNotFoundException;
 import com.communication.app.repositories.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
-import java.util.*;
 
 @Service
 public class EmployeeService {

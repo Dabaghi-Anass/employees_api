@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/media")
-@CrossOrigin(origins = "*")
+@CrossOrigin("*")
 public class MediaController {
     @Autowired
     StorageService storageService;
