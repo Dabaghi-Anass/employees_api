@@ -1,15 +1,6 @@
 package com.communication.app.services;
-import jakarta.servlet.http.HttpServletRequest;
-import net.coobird.thumbnailator.Thumbnails;
-import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.*;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,11 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.SneakyThrows;
+import net.coobird.thumbnailator.Thumbnails;
+
 @Service
 public class StorageService {
     @Autowired
     private  HttpServletRequest request;
-    private static String userHome = System.getProperty("user.home");
     @Value("${spring.web.resources.static-locations}")
     private String UPLOAD_DIR;
     @SneakyThrows
@@ -42,7 +41,7 @@ public class StorageService {
         return links;
     }
     public String getServerLink(String fileName) {
-        return  String.format("%s://%s:%s/%s",request.getScheme(), request.getServerName(), request.getServerPort(), fileName);
+        return  String.format("%s://%s/%s",request.getScheme(), request.getServerName(), fileName);
     }
     @SneakyThrows
     public String uploadFile(MultipartFile file) {
