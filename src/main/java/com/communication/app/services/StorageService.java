@@ -1,6 +1,7 @@
 package com.communication.app.services;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,6 +11,8 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +35,16 @@ public class StorageService {
                 .outputFormat("jpg")
                 .toOutputStream(outputStream);
         return outputStream.toByteArray();
+    }
+    public Resource loadFileAsResource(String fileName) throws IOException {
+        String uploadDirPath = UPLOAD_DIR.replace("file:/", "");
+        File file = new File(uploadDirPath , fileName);
+        Resource resource = new UrlResource(file.getPath());
+        if (resource.exists()) {
+            return resource;
+        } else {
+            return null;
+        }
     }
     public List<String> getFilesLinks(File[] files) {
         List<String> links = new ArrayList<>();
