@@ -56,7 +56,7 @@ public class StorageService {
     }
     public String getServerLink(String fileName) {
         try {
-            return String.format("%s://%s/%s", request.getScheme(), request.getServerName(), fileName);
+            return String.format("%s://%s/media/file/%s", request.getScheme(), request.getServerName(), fileName);
         } catch (Exception e) {
             return fileName;
         }
