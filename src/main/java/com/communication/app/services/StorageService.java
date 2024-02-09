@@ -41,8 +41,13 @@ public class StorageService {
         return links;
     }
     public String getServerLink(String fileName) {
-        return  String.format("%s://%s/%s",request.getScheme(), request.getServerName(), fileName);
+        try {
+            return String.format("%s://%s/%s", request.getScheme(), request.getServerName(), fileName);
+        } catch (Exception e) {
+            return fileName;
+        }
     }
+    
     @SneakyThrows
     public String uploadFile(MultipartFile file) {
         byte[] compressedImage = compressImage(file);
