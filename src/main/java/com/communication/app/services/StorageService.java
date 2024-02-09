@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class StorageService {
     public Resource loadFileAsResource(String fileName) throws IOException {
         String uploadDirPath = UPLOAD_DIR.replace("file:/", "");
         File file = new File(uploadDirPath , fileName);
-        Resource resource = new UrlResource(file.getPath());
+        Resource resource = new FileSystemResource(file.getPath());
         if (resource.exists()) {
             return resource;
         } else {

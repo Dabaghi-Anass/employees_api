@@ -22,7 +22,7 @@ public class MediaController {
     {
         return ResponseEntity.ok(storageService.uploadFile(file));
     }
-    @GetMapping("/file/{fileName}")
+    @GetMapping("/file/{fileName:.+}")
     public ResponseEntity<Resource> getImage(@PathVariable String fileName) {
         try {
             Resource resource =  storageService.loadFileAsResource(fileName);
