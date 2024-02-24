@@ -1,14 +1,11 @@
 package com.communication.app.services;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.communication.app.entities.CityEntity;
@@ -20,17 +17,28 @@ import com.communication.app.repositories.EmployeeRepository;
 @Service
 public class EmployeeService {
     @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
     EmployeeRepository employeeRepository;
+    private static final String REDIS_KEY = "EMPLOYEES";
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
     public Employee getEmployeeById(Long id) throws EmployeeNotFoundException {
+        String key = REDIS_KEY + ":" + id;
+        LinkedHashMap cashedEmployee =(LinkedHashMap) redisTemplate.opsForValue().get(key);
+        System.out.println(cashedEmployee);
         Optional<Employee> employee = employeeRepository.findById(id);
         if(employee.isEmpty()) throw new EmployeeNotFoundException("Employee not found");
+        redisTemplate.opsForValue().set(key, employee.get());
         return employee.get();
     }
     public List<Employee> getEmployeesByCity(String city) {
+        String key = REDIS_KEY + ":city:" + city;
+        List<Employee> cashedEmployees = (List<Employee>) redisTemplate.opsForValue().get(key);
+        if(cashedEmployees != null) return cashedEmployees;
         List<Employee> employees = employeeRepository.findAllByCity(city);
+        redisTemplate.opsForValue().set(key, employees);
         return employees;
     }
     public List<Employee> getEmployeesByName(String name){
