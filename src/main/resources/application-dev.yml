@@ -16,6 +16,10 @@ spring:
   web:
     resources:
       static-locations: file:/${user.home}${file.separator}uploads
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
 server:
   address: ${SERVER_ADDRESS}
   port: ${PORT}
