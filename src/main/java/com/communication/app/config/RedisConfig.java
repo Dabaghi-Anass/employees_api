@@ -23,9 +23,6 @@ public class RedisConfig {
     @Bean
     public RedisConnectionFactory connectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        System.out.println(redisHost);
-        System.out.println(redisPort);
-        System.out.println(redisPassword);
         config.setHostName(redisHost);
         config.setPort(Integer.parseInt(redisPort));
         config.setPassword(redisPassword);
