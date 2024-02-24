@@ -1,6 +1,7 @@
 package com.communication.app.config;
 
 import com.communication.app.entities.Employee;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -13,11 +14,21 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
+    @Value("${spring.data.redis.host}")
+    private String redisHost;
+    @Value("${spring.data.redis.port}")
+    private String redisPort;
+    @Value("${spring.data.redis.password}")
+    private String redisPassword;
     @Bean
     public RedisConnectionFactory connectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName("localhost");
-        config.setPort(6379);
+        System.out.println(redisHost);
+        System.out.println(redisPort);
+        System.out.println(redisPassword);
+        config.setHostName(redisHost);
+        config.setPort(Integer.parseInt(redisPort));
+        config.setPassword(redisPassword);
         return new JedisConnectionFactory(config);
     }
     @Bean
