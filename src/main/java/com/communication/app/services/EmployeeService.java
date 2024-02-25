@@ -22,7 +22,7 @@ public class EmployeeService {
     private RedisTemplate<String , Employee> redisEmployeeTemplate;
     @Autowired
     EmployeeRepository employeeRepository;
-    private static final String REDIS_KEY = "EMPLOYEES";
+    public static final String REDIS_KEY = "EMPLOYEES";
     public List<Employee> getAllEmployees() {
         String key = REDIS_KEY;
         List<Employee> employeesFromCache = (List<Employee>) redisTemplate.opsForValue().get(key);
@@ -53,10 +53,7 @@ public class EmployeeService {
     public List<Employee> getEmployeesByName(String name){
         String key = REDIS_KEY + ":name:" + name;
         List<Employee> employeesFromCache =(List<Employee>) redisTemplate.opsForValue().get(key);
-        if(employeesFromCache != null) {
-            System.out.println("cache hit");
-            return employeesFromCache;
-        }
+        if(employeesFromCache != null) return employeesFromCache;
         List<Employee> employees =  employeeRepository.findAllByNameContainingIgnoreCase(name);
         redisTemplate.opsForValue().set(key , employees);
         return employees;
@@ -65,7 +62,6 @@ public class EmployeeService {
         Employee savedEmployee = employeeRepository.save(employee);
         String key = REDIS_KEY + ":" + savedEmployee.getId();
         redisEmployeeTemplate.opsForValue().set(key , savedEmployee);
-        redisTemplate.delete(REDIS_KEY);
         return savedEmployee;
     }
     private boolean isEmptyField(Object field){
@@ -88,14 +84,12 @@ public class EmployeeService {
         Employee savedEmployee = employeeRepository.save(employee1);
         String key = REDIS_KEY + ":" + savedEmployee.getId();
         redisEmployeeTemplate.opsForValue().set(key , savedEmployee);
-        redisTemplate.delete(REDIS_KEY);
         return savedEmployee;
     }
     public EmployeePage getEmployeesByPage(int limit, int offset) {
         String key = String.format("%s:page:%d:%d" , REDIS_KEY,limit,offset);
         List<Employee> employeesFromCache =(List<Employee>) redisTemplate.opsForValue().get(key);
         if(employeesFromCache != null){
-            System.out.println("page cache hit");
             return EmployeePage.builder()
                     .employees(employeesFromCache)
                     .hasNext(employeesFromCache.size() == limit)
@@ -114,11 +108,8 @@ public class EmployeeService {
         employeeRepository.saveAll(employees);
     }
     public void deleteEmployee(Long id)  {
-        String key = REDIS_KEY + ":"+ id;
         Optional<Employee> employeeOptional = employeeRepository.findById(id);
         if(employeeOptional.isEmpty()) return;
-        redisEmployeeTemplate.delete(key);
-        redisTemplate.delete(REDIS_KEY);
         employeeRepository.delete(employeeOptional.get());
     }
     public  List<CityEntity> getAllCities()  {
