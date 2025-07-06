@@ -21,5 +21,4 @@ spring:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
 server:
-  address: ${SERVER_ADDRESS}
   port: ${PORT}
